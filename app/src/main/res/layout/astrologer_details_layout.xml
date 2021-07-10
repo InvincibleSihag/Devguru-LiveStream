@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="@drawable/border_back">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_gravity="center"
+        android:id="@+id/astImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:src="@drawable/ic_baseline_person_24"
+        app:civ_border_color="#000000"
+        app:civ_border_width="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    <TextView
+        android:id="@+id/astName"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Astrologer Name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/astImage" />
+
+        <RelativeLayout
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+        <ImageView
+
+            android:layout_margin="5dp"
+            android:id="@+id/tick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:srcCompat="@drawable/ic_baseline_check_circle_24" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_marginLeft="5dp"
+
+        android:id="@+id/astDegree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="@+id/astName"
+        app:layout_constraintTop_toBottomOf="@+id/astName" />
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/astLanguages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="@+id/astName"
+        app:layout_constraintTop_toBottomOf="@+id/astDegree" />
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/astExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/grey"
+        app:layout_constraintStart_toStartOf="@+id/astName"
+        app:layout_constraintTop_toBottomOf="@+id/astLanguages" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+
+        >
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/astPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/astName"
+        app:layout_constraintTop_toBottomOf="@+id/astExp" />
+
+        <RelativeLayout
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        <TextView
+
+            android:id="@+id/isOnline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/border_back"
+            android:gravity="right"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="TextView"
+            android:textColor="@color/black"
+
+            />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
