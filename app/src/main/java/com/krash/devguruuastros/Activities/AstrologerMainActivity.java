@@ -59,7 +59,7 @@ public class AstrologerMainActivity extends AppCompatActivity {
     private TextView earningTV, todayEarnTV;
     private ImageView setting, account, history, CS, viewAs;
     String username = "";
-    LinearLayout linearLayout4;
+    LinearLayout linearLayout4, liveStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,6 +230,11 @@ public class AstrologerMainActivity extends AppCompatActivity {
                 }
                 firebaseDatabase.getReference().child("Astrologers").child(firebaseAuth.getUid()).updateChildren(updateStatus);
             }
+        });
+        liveStream = findViewById(R.id.liveMain);
+        liveStream.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), LiveStreaming.class);
+            startActivity(intent);
         });
 //
 //        videoTB = findViewById(R.id.videoTB);

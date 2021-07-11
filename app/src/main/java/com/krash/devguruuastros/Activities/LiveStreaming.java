@@ -1,10 +1,12 @@
 package com.krash.devguruuastros.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -13,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.krash.devguruuastros.R;
 
 import io.agora.rtc.Constants;
@@ -27,7 +32,10 @@ import com.krash.devguruuastros.media.RtcTokenBuilder.Role;
 public class LiveStreaming extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID = 22;
     private RtcEngine mRtcEngine;
-
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference astrologerReference;
+    String astrologerUid;
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
         @Override
         // Listen for the onJoinChannelSuccess callback.
@@ -92,7 +100,10 @@ public class LiveStreaming extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_streaming);
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        astrologerUid = firebaseAuth.getUid();
+        astrologerReference = FirebaseDatabase.getInstance().getReference("LiveStreams").child(firebaseAuth.getUid());
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID)) {
@@ -138,7 +149,10 @@ public class LiveStreaming extends AppCompatActivity {
         String token = BuildToken();
         System.out.println(token);
         // Join a channel with a token.
-        mRtcEngine.joinChannel(token, "liveStream", "",1234567890);
+        mRtcEngine.joinChannel(token, astrologerUid, "",1234567890);
+        astrologerReference.child("token").setValue(token);
+        astrologerReference.child("astrologerUserIDStream").setValue(1234567890);
+        astrologerReference.child("Streaming").setValue(true);
         System.out.println("Channel Joined");
     }
 
@@ -164,16 +178,22 @@ public class LiveStreaming extends AppCompatActivity {
     private void leaveChannel() {
         // Leave the current channel.
         mRtcEngine.leaveChannel();
+        astrologerReference.child("Streaming").setValue(false);
     }
     private String BuildToken()
     {
         RtcTokenBuilder token = new RtcTokenBuilder();
         int timestamp = (int)(System.currentTimeMillis() / 1000 + 3600);
         String result = token.buildTokenWithUid("e3cc7928788f4d2591885321baecb35c", "0b870feaa4b64e6b8f8c367a5cdc662a",
-                "liveStream", 1234567890, Role.Role_Publisher, timestamp);
+                astrologerUid, 1234567890, Role.Role_Publisher, timestamp);
         System.out.println("Generated Token = "+String.valueOf(result));
         return result;
     }
-
+    public void onCallClicked(View view)
+    {
+        leaveChannel();
+        Intent intent = new Intent(getApplicationContext(), AstrologerMainActivity.class);
+        startActivity(intent);
+    }
 
 }
