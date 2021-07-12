@@ -168,6 +168,7 @@ public class LiveStreaming extends AppCompatActivity {
         RelativeLayout mRemoteContainer = findViewById(R.id.remote_video_view_container);
         SurfaceView mRemoteView;
         mRemoteView = RtcEngine.CreateRendererView(getBaseContext());
+        mRemoteView.setZOrderMediaOverlay(true);
         mRemoteContainer.addView(mRemoteView);
         // Set the remote video view.
         mRtcEngine.setupRemoteVideo(new VideoCanvas(mRemoteView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
@@ -185,7 +186,7 @@ public class LiveStreaming extends AppCompatActivity {
         RtcTokenBuilder token = new RtcTokenBuilder();
         int timestamp = (int)(System.currentTimeMillis() / 1000 + 3600);
         String result = token.buildTokenWithUid("e3cc7928788f4d2591885321baecb35c", "0b870feaa4b64e6b8f8c367a5cdc662a",
-                astrologerUid, 1234567890, Role.Role_Publisher, timestamp);
+                astrologerUid, 1234567890, Role.Role_Publisher, timestamp); // astrologerUid -> channel name
         System.out.println("Generated Token = "+String.valueOf(result));
         return result;
     }
