@@ -6,6 +6,7 @@ import android.renderscript.ScriptGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +32,7 @@ public class UserLiveStreamingWatch extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("LiveStreams");
         broadcasts = new ArrayList<>();
         adapter = new LiveStreamsAdapter(broadcasts, getApplicationContext());
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         binding.recyclerView.setAdapter(adapter);
         getLiveStreams();
 

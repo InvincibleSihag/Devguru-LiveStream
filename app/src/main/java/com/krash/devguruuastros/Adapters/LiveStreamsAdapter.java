@@ -1,6 +1,7 @@
 package com.krash.devguruuastros.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.krash.devguruuastros.Activities.UserWatchStream;
 import com.krash.devguruuastros.Models.Broadcasts;
 import com.krash.devguruuastros.R;
 import com.krash.devguruuastros.databinding.LiveStreamItemBinding;
@@ -48,6 +50,13 @@ public class LiveStreamsAdapter extends RecyclerView.Adapter<LiveStreamsAdapter.
             @Override
             public void onCancelled(DatabaseError error) {
             }
+        });
+        holder.binding.cardView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, UserWatchStream.class);
+            intent.putExtra("channelName", broadcasts.get(position).getChannelName());
+            intent.putExtra("token", broadcasts.get(position).getToken());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
 
 
