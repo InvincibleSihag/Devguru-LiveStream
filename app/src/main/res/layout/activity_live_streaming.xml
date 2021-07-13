@@ -36,8 +36,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/local_preview_margin_top"
         android:layout_marginBottom="80dp"
-        android:background="@color/cardview_light_background"
-        android:visibility="gone">
+        android:background="@color/cardview_light_background">
 
         <ImageView
             android:layout_width="50dp"
