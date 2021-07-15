@@ -14,10 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.krash.devguruuastros.Adapters.MessageAdapter;
+import com.krash.devguruuastros.Models.LiveStreamMessage;
 import com.krash.devguruuastros.R;
 
 import io.agora.rtc.Constants;
@@ -29,13 +33,18 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 import com.krash.devguruuastros.media.RtcTokenBuilder;
 import com.krash.devguruuastros.media.RtcTokenBuilder.Role;
 
+import java.util.ArrayList;
+
 public class UserWatchStream extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID = 22;
     private RtcEngine mRtcEngine;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
+    RecyclerView recyclerView;
     DatabaseReference astrologerReference;
     String channelName;
+    MessageAdapter adapter;
+    ArrayList<LiveStreamMessage> messages;
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
         @Override
         // Listen for the onJoinChannelSuccess callback.
@@ -100,6 +109,8 @@ public class UserWatchStream extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_watch_stream);
+        messages = new ArrayList<>();
+        recyclerView = findViewById(R.id.recyclerView);
         Intent intent = getIntent();
         channelName = intent.getStringExtra("channelName");
         System.out.println("channel Name = "+ channelName);
@@ -110,6 +121,9 @@ public class UserWatchStream extends AppCompatActivity {
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID)) {
             initEngineAndJoinChannel();
         }
+        adapter = new MessageAdapter(getApplicationContext(), messages);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
     }
 
     private void initEngineAndJoinChannel() {

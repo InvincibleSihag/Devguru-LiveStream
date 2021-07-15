@@ -85,9 +85,12 @@
             android:name=".Activities.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Activities.LiveStreaming"/>
-        <activity android:name=".Activities.UserLiveStreamingWatch"/>
-        <activity android:name=".Activities.UserWatchStream"/>
+        <activity android:name=".Activities.LiveStreaming"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".Activities.UserLiveStreamingWatch"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".Activities.UserWatchStream"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
         <activity
             android:name=".Activities.SplashActivity"
             android:screenOrientation="portrait"
