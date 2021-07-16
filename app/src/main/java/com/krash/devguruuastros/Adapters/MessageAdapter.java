@@ -37,6 +37,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.SentView
     @Override
     public void onBindViewHolder(MessageAdapter.SentViewHolder holder, int position) {
         holder.binding.senderMessage.setText(messages.get(position).getMessage());
+        holder.binding.senderName.setText(messages.get(position).getName());
     }
 
 

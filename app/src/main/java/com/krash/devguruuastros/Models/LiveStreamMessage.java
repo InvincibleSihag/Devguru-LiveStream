@@ -4,11 +4,13 @@ public class LiveStreamMessage {
     String message;
     String userFirebaseId;
     String userAgoraId;
-    public LiveStreamMessage(String message, String userAgoraId, String userFirebaseId)
+    String name;
+    public LiveStreamMessage(String message, String name, String userAgoraId, String userFirebaseId)
     {
         this.message = message;
         this.userAgoraId = userAgoraId;
         this.userFirebaseId = userFirebaseId;
+        this.name = name;
     }
 
     public String getMessage() {
@@ -21,5 +23,9 @@ public class LiveStreamMessage {
 
     public String getUserFirebaseId() {
         return userFirebaseId;
+    }
+
+    public String getName() {
+        return name;
     }
 }

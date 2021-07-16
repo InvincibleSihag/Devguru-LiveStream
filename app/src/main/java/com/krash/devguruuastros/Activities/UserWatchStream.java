@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,9 +18,14 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.krash.devguruuastros.Adapters.MessageAdapter;
 import com.krash.devguruuastros.Models.LiveStreamMessage;
 import com.krash.devguruuastros.R;
@@ -34,6 +40,8 @@ import com.krash.devguruuastros.media.RtcTokenBuilder;
 import com.krash.devguruuastros.media.RtcTokenBuilder.Role;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Objects;
 
 public class UserWatchStream extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID = 22;
@@ -41,15 +49,22 @@ public class UserWatchStream extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
     RecyclerView recyclerView;
-    DatabaseReference astrologerReference;
+    DatabaseReference liveStreamReference;
     String channelName;
     MessageAdapter adapter;
     ArrayList<LiveStreamMessage> messages;
+    TextInputEditText inputEditText;
+    MaterialButton sendButton;
+    Hashtable<String, String> dictionary;
+    String agoraUid="";
+    String userName = "";
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
         @Override
         // Listen for the onJoinChannelSuccess callback.
         // This callback occurs when the local user successfully joins the channel.
         public void onJoinChannelSuccess(String channel, final int uid, int elapsed) {
+            agoraUid = String.valueOf(uid);
+            sendButton.setVisibility(View.VISIBLE);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -114,8 +129,9 @@ public class UserWatchStream extends AppCompatActivity {
         Intent intent = getIntent();
         channelName = intent.getStringExtra("channelName");
         System.out.println("channel Name = "+ channelName);
-        firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        liveStreamReference = FirebaseDatabase.getInstance().getReference("LiveStreams");
+        getUserName();
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID)) {
@@ -124,6 +140,23 @@ public class UserWatchStream extends AppCompatActivity {
         adapter = new MessageAdapter(getApplicationContext(), messages);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        dictionary = new Hashtable<>();
+        inputEditText = findViewById(R.id.messageInput);
+        sendButton = findViewById(R.id.sendButton);
+        sendButton.setVisibility(View.GONE);
+        sendButton.setOnClickListener(v -> {
+
+            if(!String.valueOf(inputEditText.getText()).equals("")){
+                dictionary.clear();
+                dictionary.put("firebaseId", firebaseAuth.getUid());
+                dictionary.put("agoraId", agoraUid);
+                dictionary.put("message", String.valueOf(inputEditText.getText()));
+                dictionary.put("name", userName);
+                liveStreamReference.child(channelName).child("Messages").push().setValue(dictionary);
+                inputEditText.setText("");
+            }
+        });
+        getMessages();
     }
 
     private void initEngineAndJoinChannel() {
@@ -203,6 +236,46 @@ public class UserWatchStream extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("comesfrom", "userWatchStream");
         startActivity(intent);
+    }
+
+    public void getUserName()
+    {
+        FirebaseDatabase.getInstance().getReference("Users").child(Objects.requireNonNull(firebaseAuth.getUid())).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        userName = String.valueOf(snapshot.child("name").getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+
+    }
+
+    public void getMessages(){
+        liveStreamReference.child(channelName).child("Messages").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messages.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren())
+                {
+                    messages.add(new LiveStreamMessage(
+                       String.valueOf(snapshot1.child("message").getValue()),
+                            String.valueOf(snapshot1.child("name").getValue()),
+                            String.valueOf(snapshot1.child("agoraId").getValue()),
+                            String.valueOf(snapshot1.child("firebaseId").getValue())
+                    ));
+                }
+                adapter.notifyDataSetChanged();
+                recyclerView.smoothScrollToPosition(messages.size()-1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }

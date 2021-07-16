@@ -63,8 +63,11 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/messageInput"
                 android:layout_width="300dp"
                 android:layout_height="60dp"
+                android:backgroundTintMode="screen"
+                android:textColorHint="@color/white"
                 android:background="@android:color/transparent"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/white"
@@ -72,11 +75,12 @@
                 android:hint="Type your message here"/>
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="5dp"
-                android:layout_width="50dp"
+                android:id="@+id/sendButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="20dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_send"/>
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_send" />
 
         </LinearLayout>
     </LinearLayout>

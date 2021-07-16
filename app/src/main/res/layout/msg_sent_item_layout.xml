@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -8,8 +8,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_height="40dp"
-            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_width="30dp"
             android:src="@drawable/myprofile2"
             android:layout_marginStart="5dp"/>
         <LinearLayout
@@ -21,16 +21,18 @@
 
             <TextView
                 android:id="@+id/senderName"
+                android:textColor="@color/grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="10sp"
                 android:text="Sawan" />
 
             <TextView
                 android:id="@+id/senderMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
                 android:text="Hello Astrologer" />
         </LinearLayout>
     </LinearLayout>
