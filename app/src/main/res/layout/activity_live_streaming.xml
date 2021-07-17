@@ -45,6 +45,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/icon_agora_large" />
     </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:id="@+id/recyclerView"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentBottom="true"
+        tools:listitem="@layout/msg_sent_item_layout"
+        />
 
     <RelativeLayout
         android:id="@+id/control_panel"

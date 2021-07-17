@@ -10,14 +10,22 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.krash.devguruuastros.Adapters.MessageAdapter;
+import com.krash.devguruuastros.Models.LiveStreamMessage;
 import com.krash.devguruuastros.R;
 
 import io.agora.rtc.Constants;
@@ -29,6 +37,9 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 import com.krash.devguruuastros.media.RtcTokenBuilder;
 import com.krash.devguruuastros.media.RtcTokenBuilder.Role;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class LiveStreaming extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID = 22;
     private RtcEngine mRtcEngine;
@@ -36,6 +47,10 @@ public class LiveStreaming extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     DatabaseReference astrologerReference;
     String astrologerUid;
+    DatabaseReference liveStreamReference;
+    MessageAdapter adapter;
+    ArrayList<LiveStreamMessage> messages;
+    RecyclerView recyclerView;
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
         @Override
         // Listen for the onJoinChannelSuccess callback.
@@ -103,12 +118,19 @@ public class LiveStreaming extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         astrologerUid = firebaseAuth.getUid();
+        liveStreamReference = FirebaseDatabase.getInstance().getReference("LiveStreams");
         astrologerReference = FirebaseDatabase.getInstance().getReference("LiveStreams").child(firebaseAuth.getUid());
         // If all the permissions are granted, initialize the RtcEngine object and join a channel.
         if (checkSelfPermission(REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) &&
                 checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID)) {
             initEngineAndJoinChannel();
         }
+        recyclerView = findViewById(R.id.recyclerView);
+        messages = new ArrayList<>();
+        adapter = new MessageAdapter(getApplicationContext(), messages);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+        getMessages();
     }
 
     private void initEngineAndJoinChannel() {
@@ -195,6 +217,30 @@ public class LiveStreaming extends AppCompatActivity {
         leaveChannel();
         Intent intent = new Intent(getApplicationContext(), AstrologerMainActivity.class);
         startActivity(intent);
+    }
+    public void getMessages(){
+        liveStreamReference.child(Objects.requireNonNull(firebaseAuth.getUid())).child("Messages").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messages.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren())
+                {
+                    messages.add(new LiveStreamMessage(
+                            String.valueOf(snapshot1.child("message").getValue()),
+                            String.valueOf(snapshot1.child("name").getValue()),
+                            String.valueOf(snapshot1.child("agoraId").getValue()),
+                            String.valueOf(snapshot1.child("firebaseId").getValue())
+                    ));
+                }
+                adapter.notifyDataSetChanged();
+                recyclerView.smoothScrollToPosition(messages.size()-1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }
