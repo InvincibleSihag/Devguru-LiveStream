@@ -216,6 +216,7 @@ public class LiveStreaming extends AppCompatActivity {
     {
         leaveChannel();
         Intent intent = new Intent(getApplicationContext(), AstrologerMainActivity.class);
+        liveStreamReference.child(Objects.requireNonNull(firebaseAuth.getUid())).child("Messages").removeValue();
         startActivity(intent);
     }
     public void getMessages(){
@@ -233,7 +234,10 @@ public class LiveStreaming extends AppCompatActivity {
                     ));
                 }
                 adapter.notifyDataSetChanged();
-                recyclerView.smoothScrollToPosition(messages.size()-1);
+                if (messages.size() > 3)
+                {
+                    recyclerView.smoothScrollToPosition(messages.size()-1);
+                }
             }
 
             @Override

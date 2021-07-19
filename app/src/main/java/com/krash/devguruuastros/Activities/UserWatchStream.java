@@ -65,6 +65,7 @@ public class UserWatchStream extends AppCompatActivity {
         public void onJoinChannelSuccess(String channel, final int uid, int elapsed) {
             agoraUid = String.valueOf(uid);
             sendButton.setVisibility(View.VISIBLE);
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -215,6 +216,12 @@ public class UserWatchStream extends AppCompatActivity {
         // Join a channel with a token.
         mRtcEngine.joinChannel(token, channelName, "",0);
         System.out.println("Channel Joined");
+        dictionary = new Hashtable<>();
+        dictionary.put("firebaseId", firebaseAuth.getUid());
+        dictionary.put("agoraId", agoraUid);
+        dictionary.put("message", userName + " " + "joined the Live Stream");
+        dictionary.put("name", userName);
+        liveStreamReference.child(channelName).child("Messages").push().setValue(dictionary);
     }
 
     private void leaveChannel() {
@@ -268,7 +275,10 @@ public class UserWatchStream extends AppCompatActivity {
                     ));
                 }
                 adapter.notifyDataSetChanged();
-                recyclerView.smoothScrollToPosition(messages.size()-1);
+                if (messages.size() > 3)
+                {
+                    recyclerView.smoothScrollToPosition(messages.size()-1);
+                }
             }
 
             @Override
