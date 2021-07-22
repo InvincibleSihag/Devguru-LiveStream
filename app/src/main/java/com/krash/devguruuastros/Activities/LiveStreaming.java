@@ -84,6 +84,10 @@ public class LiveStreaming extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if(uid == 1234567890)
+                    {
+                        astrologerReference.child("Streaming").setValue(false);
+                    }
                     Log.i("agora","User offline, uid: " + (uid & 0xFFFFFFFFL));
 
                 }

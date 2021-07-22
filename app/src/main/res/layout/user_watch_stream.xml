@@ -61,26 +61,44 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/messageInput"
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:backgroundTintMode="screen"
-                android:textColorHint="@color/white"
-                android:background="@android:color/transparent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:keyboardNavigationCluster="true"
-                android:hint="Type your message here"/>
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/messageInput"
+                    android:layout_width="300dp"
+                    android:layout_height="60dp"
+                    android:textColorHint="@color/white"
+                    android:backgroundTintMode="screen"
+                    android:textColor="@color/black"
+                    android:keyboardNavigationCluster="true"
+                    android:hint="Type your message here"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sendButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/ic_send" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <pl.droidsonroids.gif.GifImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dancer"
+                    android:src="@drawable/gift" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

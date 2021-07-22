@@ -94,6 +94,10 @@ public class UserWatchStream extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if(uid == 1234567890)
+                    {
+                        leaveChannel();
+                    }
                     Log.i("agora","User offline, uid: " + (uid & 0xFFFFFFFFL));
 
                 }
@@ -227,6 +231,9 @@ public class UserWatchStream extends AppCompatActivity {
     private void leaveChannel() {
         // Leave the current channel.
         mRtcEngine.leaveChannel();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("comesfrom", "userWatchStream");
+        startActivity(intent);
     }
     private String BuildToken()
     {
@@ -240,9 +247,7 @@ public class UserWatchStream extends AppCompatActivity {
     public void onCallClicked(View view)
     {
         leaveChannel();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("comesfrom", "userWatchStream");
-        startActivity(intent);
+
     }
 
     public void getUserName()
@@ -288,4 +293,12 @@ public class UserWatchStream extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("comesfrom", "userWatchStream");
+        leaveChannel();
+        startActivity(intent);
+    }
 }
