@@ -23,6 +23,7 @@ import com.krash.devguruuastros.Models.RequestClass;
 import com.krash.devguruuastros.Models.SahilRingtone;
 import com.krash.devguruuastros.Models.User;
 import com.krash.devguruuastros.R;
+import com.krash.devguruuastros.media.IvrCalling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,10 @@ public class UserCallActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.userRV);
         recyclerView.setHasFixedSize(true);
 
-
+        System.out.println("Waiting Users Started");
+        IvrCalling call = new IvrCalling("7495073998", "9467087708");
+        String a = call.getNumber();
+        System.out.println(a);
 
         getAstrologerRequest();
 
