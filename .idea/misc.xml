@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_ast_message.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_astrologer_account.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_astrologer_call.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_astrologer_call_request.xml" value="0.1" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_astrologer_chat.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_astrologer_details.xml" value="0.15" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_astrologer_main.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_call_main.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_chat.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_chat_main.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_login.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_main.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_mat_main.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_message.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_my_orders.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_personal_info.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_registration.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_settings.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_sign_in.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_splash.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_ticket.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_user_call.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_user_chat.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_user_live_streaming_watch.xml" value="0.1" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_users.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/activity_wallet.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/ast_chat_layout.xml" value="0.2" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/ast_orders_list_item.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/astrologer_details_layout.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/call_details.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/call_dialog.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/call_layout.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/chat_item_left.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/chat_item_right.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/confirmation_layout.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/dialog_call.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/edit_phone_number.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/forgot_pass_dialog.xml" value="0.11775362318840579" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/live_stream_item.xml" value="0.1" />
+        <entry key="..\:/GithubRepos/Devguru-LiveStream/app/src/main/res/layout/loading_progress_dialog.xml" value="0.11775362318840579" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
@@ -25,7 +71,7 @@
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="13">
+        <list size="14">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
           <item index="2" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
@@ -39,6 +85,7 @@
           <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
           <item index="11" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
           <item index="12" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+          <item index="13" class="java.lang.String" itemvalue="lombok.NonNull" />
         </list>
       </value>
     </option>

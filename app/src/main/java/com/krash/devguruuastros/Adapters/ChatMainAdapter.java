@@ -1,5 +1,6 @@
 package com.krash.devguruuastros.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class ChatMainAdapter extends RecyclerView.Adapter<ChatMainAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ChatMainAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ChatMainAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String res = astrologerModelList.get(position).getProfileURL();
         String name = astrologerModelList.get(position).getName();
         String lang = astrologerModelList.get(position).getLanguage();

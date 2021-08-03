@@ -1,11 +1,13 @@
 package com.krash.devguruuastros.Activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -45,6 +47,7 @@ import com.krash.devguruuastros.Models.SystemTools;
 import com.krash.devguruuastros.R;
 import com.krash.devguruuastros.databinding.CallLayoutBinding;
 import com.krash.devguruuastros.databinding.LowBalanceDialogBinding;
+import com.krash.devguruuastros.media.IvrCalling;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.Sinch;
 import com.sinch.android.rtc.SinchClient;
@@ -133,7 +136,9 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         statusMap = new HashMap<>();
-
+        if (ContextCompat.checkSelfPermission(AstrologerDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AstrologerDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+        }
         Intent i = getIntent();
         uid = i.getStringExtra("uid");
         userType = i.getStringExtra("userType");
@@ -375,30 +380,49 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
 //                        final TextView qty = dialog.findViewById(R.id.calldetails);
 //                        qty.setText("We will take your " + Integer.parseInt(String.valueOf(balance / Integer.parseInt(model.getCallPrice()))) + " min");
 //                        final Button submitBtn = dialog.findViewById(R.id.button);
-                            ref = firebaseDatabase.getReference().child("Astrologers").child(uid);
-                            listener = new ValueEventListener() {
+
+                            firebaseDatabase.getReference().child("Users").child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if ((snapshot.child("callOnline").getValue().equals("Online")) && (!snapshot.child("isBusy").getValue().toString().equals("true"))) {
-                                        callAstrologer();
-                                    } else {
-                                        Toast.makeText(AstrologerDetailsActivity.this, "Astrologer is Busy or Offline! Try Again later!", Toast.LENGTH_SHORT).show();
-                                    }
+                                    String userPhoneNumber = String.valueOf(snapshot.child("phoneNo").getValue());
+
+                                    firebaseDatabase.getReference().child("Astrologers").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            System.out.println("Waiting Users Started");
+                                            IvrCalling call = new IvrCalling(getApplicationContext(), userPhoneNumber, String.valueOf(snapshot.child("mobile").getValue()));
+                                            System.out.println(userPhoneNumber + String.valueOf(snapshot.child("mobile").getValue()));
+                                            String a = call.getNumber();
+                                            System.out.println(a);
+
+//                                        callAstrologer();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            };
 
-                            if (Integer.parseInt(String.valueOf(balance / Integer.parseInt(model.getCallPrice()))) > 0) {
-                                // dialog.dismiss();
-                                duration = Integer.parseInt(String.valueOf(balance / Integer.parseInt(model.getCallPrice())));
-                                ref.removeEventListener(listener);
-                                ref.addValueEventListener(listener);
-                            } else {
-                                Toast.makeText(AstrologerDetailsActivity.this, "Duration should be atleast 1 mins!", Toast.LENGTH_LONG).show();
-                            }
+                                }
+                            });
+
+
+
+
+//                            if (Integer.parseInt(String.valueOf(balance / Integer.parseInt(model.getCallPrice()))) > 0) {
+//                                // dialog.dismiss();
+//                                duration = Integer.parseInt(String.valueOf(balance / Integer.parseInt(model.getCallPrice())));
+//                                ref.removeEventListener(listener);
+//                                ref.addValueEventListener(listener);
+//                            } else {
+//                                Toast.makeText(AstrologerDetailsActivity.this, "Duration should be atleast 1 mins!", Toast.LENGTH_LONG).show();
+//                            }
 //
 //                        submitBtn.setOnClickListener(new View.OnClickListener() {
 //                            @Override
@@ -427,8 +451,8 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
             });
         }
 
-        getListOfPhotos();
-        getCallAndChatDuration();
+//        getListOfPhotos();
+//        getCallAndChatDuration();
     }
 
 
@@ -481,7 +505,6 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
                         t1.cancel();
 
 
-                        ref.removeEventListener(listener);
                         callAst = sinchClient.getCallClient().callUser(uid);
                         callBinding.astCallEndBtn.setOnClickListener(new View.OnClickListener() {
                             @Override

@@ -50,10 +50,7 @@ public class UserCallActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.userRV);
         recyclerView.setHasFixedSize(true);
 
-        System.out.println("Waiting Users Started");
-        IvrCalling call = new IvrCalling("7495073998", "9467087708");
-        String a = call.getNumber();
-        System.out.println(a);
+
 
         getAstrologerRequest();
 

@@ -48,7 +48,6 @@ public class CallMainActivity extends AppCompatActivity {
                 callAstRV.setLayoutManager(new LinearLayoutManager(CallMainActivity.this, LinearLayoutManager.VERTICAL, false));
                 chatMainAdapter = new ChatMainAdapter(astrologerModelListOnline);
                 callAstRV.setAdapter(chatMainAdapter);
-                chatMainAdapter.notifyDataSetChanged();
             }
 
             @Override
