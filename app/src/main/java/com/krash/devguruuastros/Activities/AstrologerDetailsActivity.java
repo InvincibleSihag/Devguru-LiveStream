@@ -3,6 +3,7 @@ package com.krash.devguruuastros.Activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -373,6 +374,10 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
                             });
                             dialog1.show();
                         } else {
+                            ProgressDialog progressDialog = new ProgressDialog(AstrologerDetailsActivity.this);
+                            progressDialog.setMessage("Establishing the Call ....");
+                            progressDialog.setCanceledOnTouchOutside(true);
+                            progressDialog.show();
 //                        final Dialog dialog = new Dialog(AstrologerDetailsActivity.this);
 //                        dialog.setContentView(R.layout.call_details);
 //                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
