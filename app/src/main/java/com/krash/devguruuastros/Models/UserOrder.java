@@ -1,7 +1,7 @@
 package com.krash.devguruuastros.Models;
 
 public class UserOrder {
-    String AstUID, orderID, orderDate, duration, expense, name , orderTime, orderType;
+    public String AstUID, orderID, orderDate, duration, expense, name , orderTime, orderType;
 
     public UserOrder(String astUID, String orderID, String orderDate, String duration, String expense, String name, String orderTime, String orderType) {
         AstUID = astUID;

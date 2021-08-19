@@ -1,8 +1,8 @@
 package com.krash.devguruuastros.Models;
 
 public class Message {
-    private String messageID, message, senderID, receiverID, imageURL;
-    private long timestamp;
+    public String messageID, message, senderID, receiverID, imageURL;
+    public long timestamp;
 
     public Message() {
     }

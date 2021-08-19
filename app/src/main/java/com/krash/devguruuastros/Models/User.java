@@ -1,7 +1,7 @@
 package com.krash.devguruuastros.Models;
 
 public class User {
-    String uid, email, name, phoneNo, profileImage, DOB, TOB, POB, Occupation, Gender, MaritalStatus, status, duration, balance;
+    public String uid, email, name, phoneNo, profileImage, DOB, TOB, POB, Occupation, Gender, MaritalStatus, status, duration, balance;
 
     RequestClass rc;
 

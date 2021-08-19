@@ -1,7 +1,7 @@
 package com.krash.devguruuastros.Models;
 
 public class ReviewModel {
-    String message, rating, timestamp, username, reviewID;
+    public String message, rating, timestamp, username, reviewID;
 
     public ReviewModel(String message, String rating, String timestamp, String username, String reviewID) {
         this.message = message;

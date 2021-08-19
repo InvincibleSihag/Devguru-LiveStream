@@ -1,7 +1,7 @@
 package com.krash.devguruuastros.Models;
 
 public class Messages {
-    String mid,astroid,userid,sender,type,message,url,date,time,activation;
+    public String mid,astroid,userid,sender,type,message,url,date,time,activation;
 
     public Messages(String mid, String astroid, String userid, String sender, String type, String message, String url, String date, String time, String activation) {
         this.mid = mid;

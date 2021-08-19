@@ -33,7 +33,8 @@ public class ChatMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_main);
         astMainRV = findViewById(R.id.chatMainRV);
         astMainRV.setLayoutManager(new LinearLayoutManager(ChatMainActivity.this, LinearLayoutManager.VERTICAL, false));
-
+        chatMainAdapter = new ChatMainAdapter(astrologerModelListOnline);
+        astMainRV.setAdapter(chatMainAdapter);
         FirebaseDatabase.getInstance().getReference().child("Astrologers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -44,8 +45,6 @@ public class ChatMainActivity extends AppCompatActivity {
                         astrologerModelListOnline.add(model);
                     }
                 }
-                chatMainAdapter = new ChatMainAdapter(astrologerModelListOnline);
-                astMainRV.setAdapter(chatMainAdapter);
                 chatMainAdapter.notifyDataSetChanged();
             }
 

@@ -1,7 +1,7 @@
 package com.krash.devguruuastros.Models;
 
 public class RequestClass {
-    String astrologerid,userid,requestid,sessionid,username,photo,duration,time,date,status,activation,reqtype;
+    public String astrologerid,userid,requestid,sessionid,username,photo,duration,time,date,status,activation,reqtype;
 
     public RequestClass() {
     }

@@ -1,7 +1,7 @@
 package com.krash.devguruuastros.Models;
 
 public class MatClass {
-    String userid,matid,username,usergender,userdob,usertob,userpob,marriedstaus,mobile,email,useroccupation,fathername,fatheroccupation,mothername,motheroccupation,boysibling,girlsibling,siblingdetails;
+    public String userid,matid,username,usergender,userdob,usertob,userpob,marriedstaus,mobile,email,useroccupation,fathername,fatheroccupation,mothername,motheroccupation,boysibling,girlsibling,siblingdetails;
 
 
     public MatClass(String userid, String matid, String username, String usergender, String userdob, String usertob, String userpob, String marriedstaus, String mobile, String email, String useroccupation, String fathername, String fatheroccupation, String mothername, String motheroccupation, String boysibling, String girlsibling, String siblingdetails) {
