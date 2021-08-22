@@ -38,8 +38,9 @@ public class IvrCalling {
     private final int max_seconds = 500;
     Context context;
     Connection.Response response;
+    String astroId;
 
-    public IvrCalling(Context context, String from, String to)
+    public IvrCalling(Context context, String from, String to, String astroId)
     {
         this.context = context;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -48,6 +49,7 @@ public class IvrCalling {
         callReference = FirebaseDatabase.getInstance().getReference().child("Calls");
         this.from = from;
         this.to = to;
+        this.astroId = astroId;
     }
 
     public String getNumber() {
@@ -68,7 +70,9 @@ public class IvrCalling {
             uniqueId = callReference.push().getKey();
             String apiKey = "Bearer 83951|URwRAZdLgAkaO6VabroyyoHo6zXokyS4IoGyzd5p";
             response = Jsoup.connect("https://panelv2.cloudshope.com/api/outbond_call" + "?from_number=" + from
-                    + "&mobile_number=" + to + "&max_seconds=" + String.valueOf(max_seconds) + "&unique_id=" + uniqueId)
+                    + "&mobile_number=" + to + "&max_seconds=" + String.valueOf(max_seconds) + "&unique_id=" + uniqueId
+                    + "&dlurl=http://devguruuastro.com/api.php?unique_id=" + firebaseAuth.getUid()
+                    + "(-)" + astroId)
                     .timeout(10 * 10000)
                     .method(Method.GET)
                     .header("Authorization", apiKey)
@@ -86,10 +90,10 @@ public class IvrCalling {
                     databaseReference.child("ivrAvailable").setValue("true");
                 }
             });
-            callReference.child(uniqueId).child("from").setValue(from);
-            callReference.child(uniqueId).child("to").setValue(to);
-            callReference.child(uniqueId).child("max_seconds").setValue(max_seconds);
-            callReference.child(uniqueId).child("response").setValue(response.parse().text());
+//            callReference.child(uniqueId).child("from").setValue(from);
+//            callReference.child(uniqueId).child("to").setValue(to);
+//            callReference.child(uniqueId).child("max_seconds").setValue(max_seconds);
+//            callReference.child(uniqueId).child("response").setValue(response.parse().text());
 
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + json.get("data")));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -99,10 +103,10 @@ public class IvrCalling {
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-            callReference.child(uniqueId).child("from").setValue(from);
-            callReference.child(uniqueId).child("to").setValue(to);
-            callReference.child(uniqueId).child("max_seconds").setValue(max_seconds);
-            callReference.child(uniqueId).child("response").setValue("Timeout in requesting the API");
+//            callReference.child(uniqueId).child("from").setValue(from);
+//            callReference.child(uniqueId).child("to").setValue(to);
+//            callReference.child(uniqueId).child("max_seconds").setValue(max_seconds);
+//            callReference.child(uniqueId).child("response").setValue("Timeout in requesting the API");
         }
     }
 }

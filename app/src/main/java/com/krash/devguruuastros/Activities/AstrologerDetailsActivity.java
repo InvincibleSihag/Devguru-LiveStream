@@ -396,7 +396,7 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                             System.out.println("Waiting Users Started");
-                                            IvrCalling call = new IvrCalling(getApplicationContext(), userPhoneNumber, String.valueOf(snapshot.child("mobile").getValue()));
+                                            IvrCalling call = new IvrCalling(getApplicationContext(), userPhoneNumber, String.valueOf(snapshot.child("mobile").getValue()), uid);
                                             System.out.println(userPhoneNumber + String.valueOf(snapshot.child("mobile").getValue()));
                                             String a = call.getNumber();
                                             System.out.println(a);
