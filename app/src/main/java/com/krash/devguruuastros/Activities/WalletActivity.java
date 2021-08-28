@@ -31,7 +31,8 @@ public class WalletActivity extends AppCompatActivity implements PaymentResultLi
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     String sAmount, email, phone;
-    int amount, bal;
+    int amount;
+    float bal;
     Map<String, Object> updateBalance = new HashMap<>();
 
     @Override
@@ -45,7 +46,7 @@ public class WalletActivity extends AppCompatActivity implements PaymentResultLi
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                bal = Integer.parseInt(snapshot.child("balance").getValue().toString());
+                bal = Float.parseFloat(snapshot.child("balance").getValue().toString());
                 binding.userBalance.setText("₹" + snapshot.child("balance").getValue().toString());
                 email = snapshot.child("email").getValue().toString();
                 phone = snapshot.child("phoneNo").getValue().toString();

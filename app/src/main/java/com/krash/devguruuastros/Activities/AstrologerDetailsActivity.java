@@ -80,7 +80,8 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
     LinearLayout btnLayout;
     SinchClient sinchClient;
     ValueEventListener valueEventListener, listener;
-    int astPrice, astCallPrice, balance, flag, usedDuration, astBal;
+    int astPrice, astCallPrice, flag, usedDuration, astBal;
+    float balance;
     String username;
     long remainedSecs;
     LowBalanceDialogBinding binding;
@@ -631,7 +632,7 @@ public class AstrologerDetailsActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        balance = Integer.parseInt(snapshot.child("balance").getValue().toString());
+                        balance = Float.parseFloat(snapshot.child("balance").getValue().toString());
                         username = snapshot.child("name").getValue().toString();
                     }
 

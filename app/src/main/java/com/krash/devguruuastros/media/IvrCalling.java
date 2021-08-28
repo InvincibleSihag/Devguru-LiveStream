@@ -13,8 +13,11 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.krash.devguruuastros.Activities.AstrologerDetailsActivity;
 
 import org.json.JSONException;
@@ -39,7 +42,9 @@ public class IvrCalling {
     Context context;
     Connection.Response response;
     String astroId;
-
+    String callPrice;
+    String userBalance;
+    String astroBalance;
     public IvrCalling(Context context, String from, String to, String astroId)
     {
         this.context = context;
@@ -58,6 +63,36 @@ public class IvrCalling {
             @Override
             public void run() {
                 super.run();
+
+                firebaseDatabase.getReference().child("Astrologers").child(astroId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        callPrice = String.valueOf(snapshot.child("callPrice").getValue());
+                        astroBalance = String.valueOf(snapshot.child("balance").getValue());
+                        firebaseDatabase.getReference().child("Users").child(firebaseAuth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                userBalance = String.valueOf(snapshot.child("balance").getValue());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+                while (callPrice == null || astroBalance == null || userBalance == null)
+                {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 request();
             }
         }.start();
@@ -66,13 +101,19 @@ public class IvrCalling {
 
     public void request()
     {
+
+
         try {
+
             uniqueId = callReference.push().getKey();
             String apiKey = "Bearer 83951|URwRAZdLgAkaO6VabroyyoHo6zXokyS4IoGyzd5p";
             response = Jsoup.connect("https://panelv2.cloudshope.com/api/outbond_call" + "?from_number=" + from
                     + "&mobile_number=" + to + "&max_seconds=" + String.valueOf(max_seconds) + "&unique_id=" + uniqueId
                     + "&dlurl=http://devguruuastro.com/api.php?unique_id=" + firebaseAuth.getUid()
-                    + "(-)" + astroId)
+                    + "(-)" + userBalance
+                    + "(-)" + astroId
+                    + "(-)" + callPrice
+                    + "(-)" + astroBalance)
                     .timeout(10 * 10000)
                     .method(Method.GET)
                     .header("Authorization", apiKey)
@@ -95,9 +136,9 @@ public class IvrCalling {
 //            callReference.child(uniqueId).child("max_seconds").setValue(max_seconds);
 //            callReference.child(uniqueId).child("response").setValue(response.parse().text());
 
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + json.get("data")));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                context.startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + json.get("data")));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            context.startActivity(intent);
 
             System.out.println(a);
 
@@ -108,5 +149,6 @@ public class IvrCalling {
 //            callReference.child(uniqueId).child("max_seconds").setValue(max_seconds);
 //            callReference.child(uniqueId).child("response").setValue("Timeout in requesting the API");
         }
+
     }
 }
