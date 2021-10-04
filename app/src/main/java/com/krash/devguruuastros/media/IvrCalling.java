@@ -101,10 +101,7 @@ public class IvrCalling {
 
     public void request()
     {
-
-
         try {
-
             uniqueId = callReference.push().getKey();
             String apiKey = "Bearer 83951|URwRAZdLgAkaO6VabroyyoHo6zXokyS4IoGyzd5p";
             response = Jsoup.connect("https://panelv2.cloudshope.com/api/outbond_call" + "?from_number=" + from
